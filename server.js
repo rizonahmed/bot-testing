@@ -10,15 +10,23 @@ const bot = new TelegramBot(token, { polling: true });
 // Debug log to check if bot is online
 console.log("Bot is running...");
 
-// Handle /start command
-bot.onText(/\/start/, (msg) => {
+// Set Web App Menu Button so that it shows immediately when bot opens
+bot.setChatMenuButton({
+  type: 'web_app',
+  web_app: { url: 'https://dodi-token.netlify.app/' }
+}).then(() => {
+  console.log("WebApp menu button set successfully!");
+}).catch((err) => {
+  console.log("Error setting WebApp button:", err);
+});
+
+// Optional: log all messages for debugging
+bot.on('message', (msg) => {
   const chatId = msg.chat.id;
-  const username = msg.from.username || msg.from.first_name;
+  console.log('Message received from', msg.from.username || msg.from.first_name, ':', msg.text);
 
-  console.log(`/start received from: ${username} (ID: ${chatId})`);
-
-  // Send message with inline WebApp button
-  bot.sendMessage(chatId, `Welcome ${username}! Click below to open the Airdrop:`, {
+  // If you want, you can also send the button as a fallback on any message
+  bot.sendMessage(chatId, 'Click below to open the Airdrop:', {
     reply_markup: {
       inline_keyboard: [
         [
@@ -30,9 +38,4 @@ bot.onText(/\/start/, (msg) => {
       ],
     },
   });
-});
-
-// Optional: log all messages for debugging
-bot.on('message', (msg) => {
-  console.log('Message received:', msg.text);
 });
