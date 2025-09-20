@@ -1,0 +1,12 @@
+{
+  "name": "airdrop-bot",
+  "version": "1.0.0",
+  "description": "Telegram Airdrop Bot with Web App button",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}
